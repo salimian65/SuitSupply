@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <TargetFramework>net6.0</TargetFramework>
+	  <AssemblyName>Soshyant.Framework.Persistence</AssemblyName>
+	  <RootNamespace>Soshyant.Framework.Persistence</RootNamespace>
+	  <Configurations>Debug;Release;stg</Configurations>
+  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.8" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\SuitSupply.Framework.Domain\SuitSupply.Framework.Domain.csproj" />
+	</ItemGroup>
+
+</Project>
