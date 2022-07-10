@@ -2,7 +2,7 @@
 
 This application is responsible to handle just Rlc message which is published from Rlc to keep update OMS instrument repository also this app handle three messages InstrumentAdded, InstrumentStateChanged, InstrumentGroupStateChanged 
 ## Architecture
-[Big Picture Diagram Like ](https://drive.google.com/file/d/1Rk1-0pOWAwpwSserQQQ1TMPW87-XAdnR/view?usp=sharing)
+[Click Here to see Big Picture Diagram  in app.diagrams.net ](https://drive.google.com/file/d/1Rk1-0pOWAwpwSserQQQ1TMPW87-XAdnR/view?usp=sharing)
 
 ![Architecture image](readme/Capture1.JPG)
 ![Architecture image](readme/Capture2.JPG)
