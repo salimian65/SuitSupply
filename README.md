@@ -2,11 +2,12 @@
 
 This application is responsible to handle just Rlc message which is published from Rlc to keep update OMS instrument repository also this app handle three messages InstrumentAdded, InstrumentStateChanged, InstrumentGroupStateChanged 
 ## Architecture
+[a link](https://drive.google.com/file/d/1Rk1-0pOWAwpwSserQQQ1TMPW87-XAdnR/view?usp=sharing)
 
 ![Architecture image](readme/Capture1.JPG)
 ![Architecture image](readme/Capture2.JPG)
-# DevOps
-Customer Suit Altering Order Flow
+
+## Customer Suit Altering Order Flow
 Notice: we use the Inbox mechanism for checking the Idempotency in all parts of the solution when an event is caught by the event subscriber if the event isn't duplicated 
 
 Notice: we use the Outbox mechanism for guaranteeing the data and the event are persisted atomically. after persisting a background worker checking the Outbox storage for publishing the new data periodically
@@ -36,7 +37,9 @@ Notice: we use the Outbox mechanism for guaranteeing the data and the event are 
 
 13- Order Management Subscribe to OrderFinishedEvent and change the order state to finish also NotoficationManagement subscribe to OrderFinisgedEvent to send a notification to the Customer with a Push Notification Mechanism.
 
+![Architecture image](readme/Capture3.JPG)
 
+# DevOps
 
 ## Dockerfile
 - [Dockerfile](src/OrderManagementService.RlcMessageListener/Dockerfile)
