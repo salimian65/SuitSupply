@@ -4,7 +4,7 @@ This application is responsible to handle just Rlc message which is published fr
 ## Architecture
 [Click Here to see Big Picture Diagram  in app.diagrams.net ](https://drive.google.com/file/d/1Rk1-0pOWAwpwSserQQQ1TMPW87-XAdnR/view?usp=sharing)
 
-![Architecture image](readme/Capture1.JPG)
+![Architecture image](readme/Capture4.JPG)
 ![Architecture image](readme/Capture2.JPG)
 
 ## Customer Suit Altering Order Flow
@@ -36,8 +36,6 @@ Notice: we use the Outbox mechanism for guaranteeing the data and the event are 
 12- when the Tailor finishes the Altering Task (FinishAlteringTaskCommand), OrderFinishedEvent is published
 
 13- Order Management Subscribe to OrderFinishedEvent and change the order state to finish also NotoficationManagement subscribe to OrderFinisgedEvent to send a notification to the Customer with a Push Notification Mechanism.
-
-![Architecture image](readme/Capture3.JPG)
 
 # DevOps
 
