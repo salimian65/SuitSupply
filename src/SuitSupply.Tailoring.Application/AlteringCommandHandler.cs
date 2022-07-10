@@ -7,16 +7,16 @@ namespace SuitSupply.Tailoring.Application;
 
 public class AlteringCommandHandler : CommandHandler, ICommandHandler<AlteringCommand>
 {
-    private readonly ITailorRepository tailorRepository;
+    private readonly ITailorRepository _tailorRepository;
 
     public AlteringCommandHandler(ITailorUnitOfWork unitOfWork, ITailorRepository tailorRepository) : base(unitOfWork)
     {
-        this.tailorRepository = tailorRepository;
+        this._tailorRepository = tailorRepository;
     }
 
     public void Handle(AlteringCommand command)
     {
-        var tailor = tailorRepository.Get(command.AccountId);
+        var tailor = _tailorRepository.Get(command.AccountId);
         tailor.Altering(command.BlockAmount, command.Comment);
        // tailorRepository.Update(account);
     }
