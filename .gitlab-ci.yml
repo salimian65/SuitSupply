@@ -1,0 +1,74 @@
+image: docker.farabixo.tech/general/docker:20-dind
+
+stages:
+  - build
+  - deploy-to-stg
+  - deploy-to-prod
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+  REGISTRY_URL_STG: docker.farabixo.tech/stg/oms/oms-rlc-msg-listener
+  REGISTRY_URL_PROD: docker.farabixo.tech/prod/oms/oms-rlc-msg-listener
+
+build-oms-rlc-msg-listener:
+  rules:
+    - if:  $CI_COMMIT_REF_NAME == "feature/cicd" || $CI_COMMIT_REF_NAME == "develop" || $CI_COMMIT_TAG != ""
+    - if: $CI_MERGE_REQUEST_ID
+      when: never
+  stage: build
+  tags:
+    - build
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+    GIT_STRATEGY: fetch
+  before_script:
+    - ls -la
+    - DOCKER_HOST=tcp://$(ip -4 route show default | cut -d" " -f3):2375
+    - mkdir -p $HOME/.docker
+    - echo $DOCKER_AUTH_CONFIG > $HOME/.docker/config.json
+  script:
+    - |
+      if [ -n "$CI_COMMIT_TAG" ]; then
+        VERSION="$CI_COMMIT_TAG";
+        REGISTRY_URL="$REGISTRY_URL_PROD"
+      else 
+        VERSION="$CI_COMMIT_SHORT_SHA"
+        REGISTRY_URL="$REGISTRY_URL_STG"
+      fi;
+    - echo "$REGISTRY_URL":"$VERSION"
+    - docker build --rm -f "src/OrderManagementService.RlcMessageListener/Dockerfile" --add-host=nexus.soshyant.local:192.168.10.16 --add-host=nexus.farabixo.tech:192.168.10.16 -t "$REGISTRY_URL":"$VERSION" .
+    - docker push "$REGISTRY_URL":"$VERSION"
+    - echo "Docker Image pushed into registry"
+
+deploy-oms-rlc-msg-listener-to-stg:
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+      when: never
+    - if:  $CI_COMMIT_REF_NAME == "develop"
+  stage: deploy-to-stg
+  image: docker.farabixo.tech/devops/basecd:0.0.1
+  before_script:
+    - echo $CI_COMMIT_REF_NAME
+    - echo $CI_COMMIT_BRANCH
+    - echo $CI_COMMIT_REF_SLUG
+    - echo $CI_COMMIT_TAG
+  script:
+    - VERSION=${CI_COMMIT_SHA:0:8}
+    - echo "$REPOSITORY"
+    - ssh -p8822 -o StrictHostKeyChecking=no -t  deploy@$(ip -4 route show default | cut -d" " -f3) "kubectl --kubeconfig=/tokens/farabixo/staging/stg-oms-rlc/stg-oms-rlc set image deployment/stg-oms-rlc-message-listener stg-oms-rlc-message-listener='$REGISTRY_URL_STG':'$VERSION' -n stg-oms-rlc"
+
+deploy-oms-rlc-msg-listener-to-prod:
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/'
+  stage: deploy-to-prod
+  image: docker.farabixo.tech/devops/basecd:0.0.1
+  before_script:
+    - echo $CI_COMMIT_REF_NAME
+    - echo $CI_COMMIT_BRANCH
+    - echo $CI_COMMIT_REF_SLUG
+    - echo $CI_COMMIT_TAG
+  script:
+    - VERSION=${CI_COMMIT_TAG}
+    - echo "$REPOSITORY"
+    - ssh -p8822 -o StrictHostKeyChecking=no -t  deploy@$(ip -4 route show default | cut -d" " -f3) "kubectl --kubeconfig=/tokens/farabixo/production/prod-oms-rlc/prod-oms-rlc set image deployment/prod-oms-rlc-message-listener prod-oms-rlc-message-listener='$REGISTRY_URL_PROD':'$VERSION' -n prod-oms-rlc"
