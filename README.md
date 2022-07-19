@@ -1,6 +1,13 @@
 # Suit Supply APP
 
-This application is responsible to handle just Rlc message which is published from Rlc to keep update OMS instrument repository also this app handle three messages InstrumentAdded, InstrumentStateChanged, InstrumentGroupStateChanged 
+This application is responsible to handle customers request for altering their suit, such as altering teir suit sleeves and trousers. 
+
+## Introduction
+A customer brings a suit that needs altering (shorten sleeves, shorten trousers).
+A Sales associate needs a way to enter these alterations.
+Once the payment for the alteration has been received, a tailor will pick the suit and do the alterations.
+When he is finished, the customer will be notified that the suit is ready to be picked up
+
 ## Architecture
 [Click Here to see Big Picture Diagram  in app.diagrams.net ](https://drive.google.com/file/d/1Rk1-0pOWAwpwSserQQQ1TMPW87-XAdnR/view?usp=sharing)
 
@@ -38,7 +45,10 @@ Notice: we use the Outbox mechanism for guaranteeing the data and the event are 
 13- Order Management Subscribe to OrderFinishedEvent and change the order state to finish also NotoficationManagement subscribe to OrderFinisgedEvent to send a notification to the Customer with a Push Notification Mechanism.
 
 # DevOps
-
+Nuke is responsible for creating ***Private*** and ***Public*** devOps pipline
+### nuke Private build
+1. Clean
+2. Rest
 ## Dockerfile
 - [Dockerfile](src/OrderManagementService.RlcMessageListener/Dockerfile)
 ## Testing
