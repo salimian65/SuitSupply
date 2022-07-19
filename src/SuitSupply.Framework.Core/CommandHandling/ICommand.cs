@@ -1,4 +1,4 @@
-﻿using SuitSupply.Framework.Core.Events;
+﻿using SuitSupply.Framework.Core.InternalEvents;
 
 namespace SuitSupply.Framework.Core.CommandHandling
 {

@@ -1,0 +1,1 @@
+﻿SELECT * FROM [SuitSupply].[Tailoring].[DomainEvents] WHERE IsSend = 0

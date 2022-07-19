@@ -1,12 +1,13 @@
 ﻿using STAN.Client;
+using SuitSupply.Framework.Core.ExternalEvents;
 
 namespace SuitSupply.Framework.MessageBroker
 {
-    public class StanEventPublisher : IEventPublisher
+    public class StanExternalEventPublisher : IExternalEventPublisher
     {
         private readonly IStanConnection _stanConnection;
 
-        public StanEventPublisher(IStanConnection stanConnection)
+        public StanExternalEventPublisher(IStanConnection stanConnection)
         {
             _stanConnection = stanConnection;
         }

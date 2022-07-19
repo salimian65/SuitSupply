@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using SuitSupply.Framework.Domain;
 
 namespace SuitSupply.Framework.Core.CommandHandling;
 
@@ -22,14 +23,14 @@ public class CommandLogDecoratorAsync<TCommand> :
     {
         try
         {
-            logger.Information(command);
+            logger.LogInformation(command.ToString());
             await commandHandler.HandleAsync(command);
-            logger.Information(command);
+            logger.LogInformation(command.ToString());
         }
         catch (Exception ex)
         {
             UnitOfWork.RejectChanges();
-            logger.Error(ex);
+            logger.LogError(ex.ToString());
             throw;
         }
     }

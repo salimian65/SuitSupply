@@ -9,18 +9,6 @@
         public STAN.Client.StanMsg StanMsg { get; set; }
     }
 
-    //namespace Soshyant.Framework.MessageBroker
-    //{
-    //    public interface IStanMessage
-    //    {
-    //        string Subject { get; }
-
-    //        byte[] Body { get; }
-
-    //        STAN.Client.StanMsg StanMsg { get; set; }
-    //    }
-    //}
-
     public class StanQueueGroupName
     {
         public string Name { get; set; }

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SuitSupply.Framework.Core\SuitSupply.Framework.Core.csproj" />
+    <ProjectReference Include="..\SuitSupply.Tailoring.Application.Contracts\SuitSupply.Tailoring.Application.Contracts.csproj" />
+    <ProjectReference Include="..\SuitSupply.Tailoring.Query.Facade.Contracts\SuitSupply.Tailoring.Query.Facade.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

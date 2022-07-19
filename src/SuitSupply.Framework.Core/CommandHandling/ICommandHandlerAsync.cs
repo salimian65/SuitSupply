@@ -1,4 +1,6 @@
-﻿namespace SuitSupply.Framework.Core.CommandHandling;
+﻿using SuitSupply.Framework.Domain;
+
+namespace SuitSupply.Framework.Core.CommandHandling;
 
 public interface ICommandHandlerAsync<in TCommand> where TCommand : ICommand
 {

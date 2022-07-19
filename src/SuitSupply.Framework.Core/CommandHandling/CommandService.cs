@@ -1,4 +1,5 @@
-﻿using SuitSupply.Framework.Core.Events;
+﻿using SuitSupply.Framework.Core.DependencyInjection;
+using SuitSupply.Framework.Core.InternalEvents;
 
 namespace SuitSupply.Framework.Core.CommandHandling
 {
@@ -6,6 +7,6 @@ namespace SuitSupply.Framework.Core.CommandHandling
     {
         protected ICommandBus CommandBus => ServiceLocator.Current.Resolve<ICommandBus>();
 
-        protected IEventBus EventBus => ServiceLocator.Current.Resolve<IEventBus>();
+        protected IEnternalEventBus EnternalEventBus =>  ServiceLocator.Current.Resolve<IEnternalEventBus>();
     }
 }

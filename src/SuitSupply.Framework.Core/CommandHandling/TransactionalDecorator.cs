@@ -1,11 +1,14 @@
-﻿namespace SuitSupply.Framework.Core.CommandHandling
+﻿using SuitSupply.Framework.Core.InternalEvents;
+using SuitSupply.Framework.Domain;
+
+namespace SuitSupply.Framework.Core.CommandHandling
 {
     public class TransactionalDecorator<TCommand> : ICommandHandler<TCommand> where TCommand : ICommand
     {
         private readonly ICommandHandler<TCommand> commandHandler;
-        private readonly IEventBus bus;
+        private readonly IEnternalEventBus bus;
 
-        public TransactionalDecorator(ICommandHandler<TCommand> commandHandler, IEventBus bus)
+        public TransactionalDecorator(ICommandHandler<TCommand> commandHandler, IEnternalEventBus bus)
         {
             this.commandHandler = commandHandler;
             this.bus = bus;
@@ -29,7 +32,7 @@
         {
             if (System.Transactions.Transaction.Current == null)
             {
-                bus.Publish(new TransactionCommitedEvent());
+                bus.Publish(new TransactionCommitedEnternalEvent());
             }
         }
     }

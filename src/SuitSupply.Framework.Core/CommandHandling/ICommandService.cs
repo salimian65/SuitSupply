@@ -1,4 +1,4 @@
-namespace Framework.Service.Base
+namespace SuitSupply.Framework.Core.CommandHandling
 {
     public interface ICommandService
     {
