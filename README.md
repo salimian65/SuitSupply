@@ -44,40 +44,66 @@ Notice: we use the Outbox mechanism for guaranteeing the data and the event are 
 
 13- Order Management Subscribe to OrderFinishedEvent and change the order state to finish also NotoficationManagement subscribe to OrderFinisgedEvent to send a notification to the Customer with a Push Notification Mechanism.
 
-# DevOps
+
+## Development
+### restore
+To restore your application, run:
+- dotnet restore "OMS.AkkaLighthouse.csproj"
+- dotnet restore "OMS.AkkaActorSystem.csproj"
+- dotnet restore "OMS.ServiceHost.csproj"
+
+### build
+To build your application, run:
+- dotnet build "OMS.AkkaLighthouse.csproj" -c Release -o /app/build
+- build "OMS.AkkaActorSystem.csproj" -c Release -o /app/build
+- dotnet build "OMS.ServiceHost.csproj" -c Release -o /app/build
+
+### start
+To start your application, run:
+- dotnet run --project "OMS.AkkaLighthouse.csproj"
+- dotnet run --project "OMS.AkkaActorSystem.csproj"
+- dotnet run --project "OMS.ServiceHost.csproj"
+
+## Building as publish for production
+To publish your application, run:
+- dotnet publish "OMS.AkkaLighthouse.csproj" -c Release -o /app/publish
+- dotnet publish "OMS.AkkaActorSystem.csproj" -c Release -o /app/publish
+- dotnet publish "OMS.ServiceHost.csproj" -c Release -o /app/publish
+
+To ensure everything worked, run:
+- dotnet bin/Debug/net6.0/OMS.AkkaLighthouse.dll
+- dotnet bin/Debug/net6.0/OMS.AkkaActorSystem.dll
+- dotnet bin/Debug/net6.0/OMS.ServiceHost.dll
+
+## DevOps
 Nuke is responsible for creating ***Private*** and ***Public*** devOps pipline
 ### nuke Private build
 1. Clean
 2. Rest
-## Dockerfile
-- [Dockerfile](src/OrderManagementService.RlcMessageListener/Dockerfile)
-## Testing
+### Dockerfile
+- [OMS.AkkaLighthouse Dockerfile](src/Endpoints/OMS.AkkaLighthouse/Dockerfile)
+- [OMS.AkkaActorSystem Dockerfile](src/Endpoints/OMS.AkkaActorSystem/Dockerfile)
+- [OMS.ServiceHost Dockerfile](src/Endpoints/OMS.ServiceHost/Dockerfile)
 
-## Load Test
+### Healthcheck
 
-## Profiling
+http://servicename/health
+* http://servicename/health/live
+* http://servicename/health/ready
+* http://servicename/version
 
-## Code quality
-
-
-## Healthcheck
-
-http://servicename/healthz
-* http://servicename/healthz/live
-* http://servicename/healthz/ready
-* http://servicename/healthz/version
-
-## Monitoring Metrics
+### Monitoring Metrics
 
 curl -XGET http://servicename/metrics
 
+### Configuration Files
 
-## Configuration Files
+#### appsettings
+There are three appsettings files for each service:
 
-There are two configuration files. The first one is used in development profile, and the second is for production environment.
-
-- [Development Config](src/OrderManagementService.RlcMessageListener/appsettings.json)
-- [Production Config](src/OrderManagementService.RlcMessageListener/appsettings.json)
+- [appsettings](src/Endpoints/OMS.ServiceHost/appsettings.json): Development
+- [appsettings.prod](src/Endpoints/OMS.ServiceHost/appsettings.prod.json): Production
+- [appsettings.stg.prod](src/Endpoints/OMS.ServiceHost/appsettings.stg.json): staging
 
 ## Tag
 This service will push with tag "release" in git.
