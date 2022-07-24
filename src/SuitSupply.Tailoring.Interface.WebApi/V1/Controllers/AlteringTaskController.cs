@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using SuitSupply.Framework.Core.CommandHandling;
-using SuitSupply.Tailoring.Application.Contracts;
 using SuitSupply.Tailoring.Application.Contracts.AlteringTasks;
 using SuitSupply.Tailoring.Query.Facade.Contracts;
 
