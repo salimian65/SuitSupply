@@ -67,12 +67,12 @@ namespace SuitSupply.Tailoring.E2ETests.BusinessFlow
             await _alteringTaskEndpoint.Pick(dd);
         }
 
-        [Then(@"Majid account's total of T2 should be (.*)")]
-        public async Task ThenMajidAccountsTotalOfT2ShouldBe(decimal expectedTotalOfT2)
+        [Then(@"Mehrdad should see the AlteringTask as Picked")]
+        public async Task ThenMehrdadShouldSeeTheAlteringTaskAsPicked(decimal expectedTotalOfT2)
         {
             await Task.Delay(2000);
-          var  pickedAlteringTask = await _readModelRepository.GetAlteringTask(_scenarioContext["alteringTaskNumber"].ToString());
-          pickedAlteringTask.State.Should().Be(AlteringTaskState.Picked);
+            var pickedAlteringTask = await _readModelRepository.GetAlteringTask(_scenarioContext["alteringTaskNumber"].ToString());
+            pickedAlteringTask.State.Should().Be(AlteringTaskState.Picked);
         }
 
 
