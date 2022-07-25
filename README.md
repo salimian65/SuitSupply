@@ -94,7 +94,7 @@ which containes six steps
 6. push
 
 ### Public pipeline
-###@ `nuke AsureCI stg/pro`
+### `nuke AsureCI stg/pro`
 This command run in our source control for executing the public pipeline accorting to two environment (stg/pro) and `azure-pipelines.yml`
 1. Publish
 2. Run Unit test
