@@ -2,6 +2,9 @@
 
 This application is responsible to handle customers request for altering their suit, such as altering teir suit sleeves and trousers. 
 
+## Notice
+This is a pseudocode sulotion and design scratch. I wanted to show my desging and understanding of the project. some part of project isn't complited yet such as Ordermanagement system, but the design and End to End test for Tailoring has a better situation. some part of project just need a wireup regarting to run.
+
 ## Introduction
 A customer brings a suit that needs altering (shorten sleeves, shorten trousers).
 A Sales associate needs a way to enter these alterations.
@@ -48,42 +51,59 @@ Notice: we use the Outbox mechanism for guaranteeing the data and the event are 
 ## Development
 ### restore
 To restore your application, run:
-- dotnet restore "OMS.AkkaLighthouse.csproj"
-- dotnet restore "OMS.AkkaActorSystem.csproj"
-- dotnet restore "OMS.ServiceHost.csproj"
+- dotnet restore "SuitSupply.Tailoring.Interface.WebApi.csproj"
+- dotnet restore "SuitSupply.Tailoring.Interface.InboxListener.csproj"
+- dotnet restore "SuitSupply.Tailoring.Interface.OutboxPublisher.csproj"
 
 ### build
 To build your application, run:
-- dotnet build "OMS.AkkaLighthouse.csproj" -c Release -o /app/build
-- build "OMS.AkkaActorSystem.csproj" -c Release -o /app/build
-- dotnet build "OMS.ServiceHost.csproj" -c Release -o /app/build
+- dotnet build "SuitSupply.Tailoring.Interface.WebApi.csproj" -c Release -o /app/build
+- dotnet build "SuitSupply.Tailoring.Interface.InboxListener.csproj" -c Release -o /app/build
+- dotnet build "SuitSupply.Tailoring.Interface.OutboxPublisher.csproj" -c Release -o /app/build
 
 ### start
 To start your application, run:
-- dotnet run --project "OMS.AkkaLighthouse.csproj"
-- dotnet run --project "OMS.AkkaActorSystem.csproj"
-- dotnet run --project "OMS.ServiceHost.csproj"
-
-## Building as publish for production
-To publish your application, run:
-- dotnet publish "OMS.AkkaLighthouse.csproj" -c Release -o /app/publish
-- dotnet publish "OMS.AkkaActorSystem.csproj" -c Release -o /app/publish
-- dotnet publish "OMS.ServiceHost.csproj" -c Release -o /app/publish
+- dotnet run --project "SuitSupply.Tailoring.Interface.WebApi.csproj"
+- dotnet run --project "SuitSupply.Tailoring.Interface.InboxListener.csproj"
+- dotnet run --project "SuitSupply.Tailoring.Interface.OutboxPublisher.csproj"
 
 To ensure everything worked, run:
-- dotnet bin/Debug/net6.0/OMS.AkkaLighthouse.dll
-- dotnet bin/Debug/net6.0/OMS.AkkaActorSystem.dll
-- dotnet bin/Debug/net6.0/OMS.ServiceHost.dll
+- dotnet bin/Debug/net6.0/SuitSupply.Tailoring.Interface.WebApi.dll
+- dotnet bin/Debug/net6.0/SuitSupply.Tailoring.Interface.InboxListener.dll
+- dotnet bin/Debug/net6.0/SuitSupply.Tailoring.Interface.OutboxPublisher.dll
 
 ## DevOps
 Nuke is responsible for creating ***Private*** and ***Public*** devOps pipline
-### nuke Private build
+
+### Private pipeline
+#### `nuke private build`
+which containes five steps
 1. Clean
-2. Rest
+2. Restor
+3. Build
+4. Run Unit test
+5. Run Intigration test
+
+#### `nuke private push`
+which containes six steps
+1. Clean
+2. Restor
+3. Build
+4. Run Unit test
+5. Run Intigration test
+6. push
+
+### Public pipeline
+###@ `nuke AsureCI stg/pro`
+This command run in our source control for executing the public pipeline accorting to two environment (stg/pro) and `azure-pipelines.yml`
+1. Publish
+2. Run Unit test
+3. Run Intigration test
+
 ### Dockerfile
-- [OMS.AkkaLighthouse Dockerfile](src/Endpoints/OMS.AkkaLighthouse/Dockerfile)
-- [OMS.AkkaActorSystem Dockerfile](src/Endpoints/OMS.AkkaActorSystem/Dockerfile)
-- [OMS.ServiceHost Dockerfile](src/Endpoints/OMS.ServiceHost/Dockerfile)
+- [SuitSupply.Tailoring.Interface.WebApi Dockerfile](src/SuitSupply.Tailoring.Interface.WebApi/Dockerfile)
+- [SuitSupply.Tailoring.Interface.InboxListener Dockerfile](src/SuitSupply.Tailoring.Interface.InboxListener/Dockerfile)
+- [SuitSupply.Tailoring.Interface.OutboxPublisher Dockerfile](src/SuitSupply.Tailoring.Interface.OutboxPublisher/Dockerfile)
 
 ### Healthcheck
 
@@ -101,9 +121,9 @@ curl -XGET http://servicename/metrics
 #### appsettings
 There are three appsettings files for each service:
 
-- [appsettings](src/Endpoints/OMS.ServiceHost/appsettings.json): Development
-- [appsettings.prod](src/Endpoints/OMS.ServiceHost/appsettings.prod.json): Production
-- [appsettings.stg.prod](src/Endpoints/OMS.ServiceHost/appsettings.stg.json): staging
+- [appsettings](src/SuitSupply.Tailoring.Interface.WebApi/appsettings.json): Development
+- [appsettings.prod](src/SuitSupply.Tailoring.Interface.WebApi/appsettings.prod.json): Production
+- [appsettings.stg.prod](src/SuitSupply.Tailoring.Interface.WebApi/appsettings.stg.json): staging
 
 ## Tag
 This service will push with tag "release" in git.
